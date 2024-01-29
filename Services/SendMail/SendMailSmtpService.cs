@@ -61,7 +61,7 @@ namespace SendMailLib
         private readonly ILogger<SendMailSmtpService> _Logger;
         private readonly SmtpConfig _SmtpConfig;
 
-        private SmtpClient _SmtpClient;
+        private SmtpClient _SmtpClient = new SmtpClient();
 
         private SmtpClient SmtpClient
         {

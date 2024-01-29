@@ -17,6 +17,8 @@ namespace FileUploadLib
         /// <returns></returns>
         Task UploadAsync(string filename, Stream s);
 
+        Task<Stream> DownloadAsync(string filename);
+
         /// <summary>
         /// ファイル削除
         /// </summary>

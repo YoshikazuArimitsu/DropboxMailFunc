@@ -97,6 +97,35 @@ namespace FileUploadLib
             }
         }
 
+        public async Task<Stream> DownloadAsync(string filename) {
+            var path = $"{_DropboxConfig.Path}/{filename}";
+            path = FileUploadUtils.NormalizePath(path);
+            _Logger.LogInformation($"ファイルダウンロードを実行します。 (path={path})");
+
+            try
+            {
+                using (var response = await Client.Files.DownloadAsync(path))
+                {
+                    var ms = new MemoryStream();
+                    (await response.GetContentAsStreamAsync()).CopyTo(ms);
+                    ms.Seek(0, SeekOrigin.Begin);
+
+                    return ms;
+                }
+            }
+            catch (AuthException ex)
+            {
+                _Logger.LogCritical($"DropBox認証エラーによりファイルアップロードに失敗しました。 ({ex.Message})");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _Logger.LogError($"ファイルアップロードに失敗しました。 ({ex.Message})");
+                throw;
+            }
+
+        }
+
         public async Task DeleteAsync(string filename)
         {
             var path = $"{_DropboxConfig.Path}/{filename}";
