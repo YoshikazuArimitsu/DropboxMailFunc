@@ -8,4 +8,25 @@ For a `TimerTrigger` to work, you provide a schedule in the form of a [cron expr
 
 ## Learn more
 
-<TODO> Documentation
+# 概要
+
+Dropbox の指定パスに上がったファイルをメールで送信する AzureFunctions
+
+# 設定
+
+```json
+{
+    "Dropbox" : {
+        "AccessToken" : "{Dropbox API Key}",
+        "Path" : "{監視パス}"
+    },
+    "Smtp" : {
+        "Host" : "{Host}",
+        "Port" : 465,
+        "UseSSL": true,
+        "Username" : "{SMTP ユーザ名}",
+        "Password" : "{SMTP パスワード}"
+    },
+    "To" : "{送信先メールアドレス}"
+}
+```
