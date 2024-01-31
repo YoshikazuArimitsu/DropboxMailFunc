@@ -20,7 +20,7 @@ namespace DropboxMailFunc
         }
 
         [Function("TimerTrigger1")]
-        public void Run([TimerTrigger("0 */3 * * * *")] TimerInfo myTimer)
+        public void Run([TimerTrigger("* * * * * *")] TimerInfo myTimer)
         {
             _logger.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 

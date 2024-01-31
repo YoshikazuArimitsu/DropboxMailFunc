@@ -16,10 +16,9 @@ namespace FileUploadLib
     /// </summary>
     public class DropboxConfig
     {
-        /// <summary>
-        /// アクセストークン
-        /// </summary>
-        public string? AccessToken { get; set; }
+        public string? RefreshToken { get; set; }
+        public string? ApiKey { get; set; }
+        public string? ApiSecret { get; set; }
 
         /// <summary>
         /// アップロード先パス('/{フォルダ名}')
@@ -44,7 +43,8 @@ namespace FileUploadLib
             {
                 if (_Client == null)
                 {
-                    _Client = new DropboxClient(_DropboxConfig.AccessToken);
+                    _Client = new DropboxClient(_DropboxConfig.RefreshToken,
+                        _DropboxConfig.ApiKey, _DropboxConfig.ApiSecret);
                 }
                 return _Client;
             }
@@ -97,7 +97,8 @@ namespace FileUploadLib
             }
         }
 
-        public async Task<Stream> DownloadAsync(string filename) {
+        public async Task<Stream> DownloadAsync(string filename)
+        {
             var path = $"{_DropboxConfig.Path}/{filename}";
             path = FileUploadUtils.NormalizePath(path);
             _Logger.LogInformation($"ファイルダウンロードを実行します。 (path={path})");
